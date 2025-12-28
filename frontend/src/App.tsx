@@ -1,4 +1,3 @@
-// src/App.tsx
 import {
   BrowserRouter as Router,
   Routes,
@@ -11,15 +10,17 @@ import { Toaster } from 'sonner';
 import { AuthProvider, useAuth } from "./context/AuthContext"
 
 import { MainLayout } from "./components/layouts/MainLayout"
-import { DashboardOverview } from "./components/dashboard/DashboardOverview"
 import { MyProjectsPage } from "./pages/MyProjectPage"
-import Tasks from "./pages/Tasks"
+import Tasks from "./pages/Tasks";
 import Landing from "./pages/Landing"
 import SignupPage from "./pages/SignupPage"
 import LoginPage from "./pages/LoginPage"
 import CreateProject from "./pages/CreateProject"
 import { ProjectDetail } from "./pages/ProjectDetails";
 import { InvitationList } from "./pages/Invitation";
+import NewTask from "./pages/NewTask";
+import ReviewTasks from "./pages/ReviewTasks";
+import Dashboard from "./components/dashboard/Dashboard";
 
 function ProtectedRouteLayout() {
   const { isAuthenticated } = useAuth()
@@ -40,12 +41,14 @@ export default function App() {
 
           {/* Protected Routes inside MainLayout */}
           <Route element={<ProtectedRouteLayout />}>
-            <Route path="/dashboard" element={<DashboardOverview />} />
+            <Route path="/dashboard" element={<Dashboard/>} />
             <Route path="/projects" element={<MyProjectsPage />} />
             <Route path="/tasks" element={<Tasks />} />
+            <Route path="/tasks/new" element={<NewTask />} />
             <Route path="/createProject" element={<CreateProject/>} />
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/invitations" element={<InvitationList/>} />
+            <Route path="/inReview" element={<ReviewTasks/>} />
           </Route>
 
           {/* Catch-all */}

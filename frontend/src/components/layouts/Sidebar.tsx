@@ -31,7 +31,7 @@ const sidebarNavItems: NavItem[] = [
   { label: 'My Projects', icon: FolderKanban, href: '/projects' },
   { label: 'Create New Project', icon: PlusSquare, href: '/createProject' },
   { label: 'Tasks', icon: ListChecks, href: '/Tasks' },
-  { label: 'Team', icon: Users, href: '/Team' },
+  { label: 'Team', icon: Users, href: '/inReview' },
   { label: 'Calendar', icon: CalendarDays, href: '/Calender' },
   { label: 'Messages', icon: MessageSquare, href: '/Message' },
   { label: 'Notifications', icon: Bell, href: '/invitations' },

@@ -10,13 +10,16 @@ export const getPendingInvitations = asyncHandler(async (req, res) => {
 
   const invitations = await Invitation.find({
     receiver: userId,
-    status: "pending"
-  }).populate("project", "name dueDate").populate("sender", "name");
+    status: "pending",
+  })
+    .populate("project", "name dueDate description")
+    .populate("sender", "name");
 
   return res
     .status(200)
     .json(new ApiResponse(200, invitations, "Pending invitations"));
 });
+
 
 
 

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -8,11 +7,6 @@ import { toast } from "sonner"
 /* ================= TYPES ================= */
 
 type TaskStatus = "In Progress" | "In Review" | "Completed"
-
-interface User {
-  _id: string
-  username: string
-}
 
 interface Project {
   _id: string
@@ -25,72 +19,67 @@ interface Task {
   description?: string
   status: TaskStatus
   project: Project
-  assignedTo: User
 }
 
 /* ================= COMPONENT ================= */
 
-export default function Tasks() {
-  const navigate = useNavigate()
+export default function ReviewTasks() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [loading, setLoading] = useState(true)
 
-  /* ---------- Fetch Tasks ---------- */
+  /* ---------- Fetch Tasks In Review ---------- */
 
   useEffect(() => {
-    const fetchTasks = async () => {
+    const fetchReviewTasks = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/myTask", {
+        const res = await fetch("http://localhost:8000/api/taskInReview", {
           credentials: "include",
         })
 
         const json = await res.json()
-        setTasks(json.data || [])
+
+        // Show only tasks that are actually in review
+        const inReviewTasks = (json.data || []).filter(
+          (task: Task) => task.status === "In Review"
+        )
+
+        setTasks(inReviewTasks)
       } catch {
-        toast.error("Failed to load tasks")
+        toast.error("Failed to load review tasks")
       } finally {
         setLoading(false)
       }
     }
 
-    fetchTasks()
+    fetchReviewTasks()
   }, [])
 
-  /* ---------- Update Status (In Progress → In Review) ---------- */
+  /* ---------- Update Task Status ---------- */
 
-  const markForReview = async (taskId: string) => {
+  const updateStatus = async (taskId: string, status: TaskStatus) => {
     try {
       await fetch(`http://localhost:8000/api/${taskId}/status`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ status: "In Review" }),
+        body: JSON.stringify({ status }),
       })
 
       setTasks(prev =>
-        prev.map(task =>
-          task._id === taskId
-            ? { ...task, status: "In Review" }
-            : task
-        )
+        status === "Completed"
+          ? prev.filter(t => t._id !== taskId) // remove completed from review list
+          : prev.map(t =>
+              t._id === taskId ? { ...t, status } : t
+            )
       )
 
-      toast.success("Task marked for review")
+      toast.success(
+        status === "Completed"
+          ? "Task marked as completed"
+          : "Task sent back to In Progress"
+      )
     } catch {
       toast.error("Failed to update task")
-    }
-  }
-
-  /* ---------- Status Badge Style ---------- */
-
-  const statusVariant = (status: TaskStatus) => {
-    switch (status) {
-      case "Completed":
-        return "default"
-      case "In Review":
-        return "secondary"
-      default:
-        return "outline"
     }
   }
 
@@ -99,22 +88,16 @@ export default function Tasks() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">My Tasks</h1>
-          <p className="text-muted-foreground">
-            Tasks assigned to you
-          </p>
-        </div>
-
-        <Button onClick={() => navigate("/tasks/new")}>
-          Create New Task
-        </Button>
+      <div>
+        <h1 className="text-3xl font-bold">Tasks In Review</h1>
+        <p className="text-muted-foreground">
+          Review tasks submitted by team members
+        </p>
       </div>
 
       {!loading && tasks.length === 0 && (
         <div className="rounded-lg border border-dashed p-10 text-center">
-          No tasks assigned
+          No tasks pending review 🎉
         </div>
       )}
 
@@ -122,15 +105,12 @@ export default function Tasks() {
         {tasks.map(task => (
           <Card key={task._id}>
             <CardContent className="p-5 space-y-3">
-              {/* Title */}
+              {/* Title & Status */}
               <div className="flex items-start justify-between">
                 <h3 className="text-lg font-semibold">
                   {task.title}
                 </h3>
-
-                <Badge variant={statusVariant(task.status)}>
-                  {task.status}
-                </Badge>
+                <Badge variant="secondary">In Review</Badge>
               </div>
 
               {/* Description */}
@@ -142,24 +122,33 @@ export default function Tasks() {
 
               {/* Project */}
               <p className="text-sm">
-                <span className="text-muted-foreground">
-                  Project:
-                </span>{" "}
+                <span className="text-muted-foreground">Project:</span>{" "}
                 <span className="font-medium">
                   {task.project.name}
                 </span>
               </p>
 
-              {/* Action */}
-              {task.status === "In Progress" && (
+              {/* Actions */}
+              <div className="flex gap-3 pt-2">
+                <Button
+                  size="sm"
+                  onClick={() =>
+                    updateStatus(task._id, "Completed")
+                  }
+                >
+                  Mark Completed
+                </Button>
+
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => markForReview(task._id)}
+                  onClick={() =>
+                    updateStatus(task._id, "In Progress")
+                  }
                 >
-                  Mark for Review
+                  Reject
                 </Button>
-              )}
+              </div>
             </CardContent>
           </Card>
         ))}

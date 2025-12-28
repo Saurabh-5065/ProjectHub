@@ -164,13 +164,27 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
 // get Current User.
 
+// const getCurrentUser = asyncHandler(async (req, res) => {
+//   const user = await User.findById(req.user._id).select("-password -refreshToken");
+//   if (!user) {
+//     throw new ApiError(404, "User not found");
+//   }
+//   return res.status(200).json(new ApiResponse(200, user, "User fetched successfully"));
+// });
+
+
 const getCurrentUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id).select("-password -refreshToken");
-  if (!user) {
-    throw new ApiError(404, "User not found");
+  if (!req.user) {
+    return res
+      .status(200)
+      .json(new ApiResponse(200, null, "User not logged in"));
   }
-  return res.status(200).json(new ApiResponse(200, user, "User fetched successfully"));
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, req.user, "User fetched successfully"));
 });
+
 
 // get all Users
 

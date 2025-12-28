@@ -121,6 +121,30 @@ export const getMyProjects = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, projects, "Fetched user's projects"));
 });
 
+// get projects for task creation
+export const getProjectsforTask = asyncHandler(async (req, res) => {
+  const userId = req.user?._id;
+
+  if (!userId) {
+    throw new ApiError(401, "Unauthorized. Please log in.");
+  }
+
+  const projects = await Project.find({
+    $or: [
+      { teamLead: userId }
+    ]
+  })
+    .select("name teamLead members")
+    .populate("teamLead", "username email")
+    .populate("members", "username email")
+    .sort({ createdAt: -1 });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, projects, "Fetched user's projects"));
+});
+
+
 
 // get element projectById
 export const getProjectById = async (req, res) => {

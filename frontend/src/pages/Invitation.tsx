@@ -146,6 +146,12 @@ export function InvitationList() {
               </Avatar>
               <div className="flex-1">
                 <CardTitle>{invitation.project.name}</CardTitle>
+                {invitation.project.description && (
+                <p className="text-sm text-gray-700 leading-snug">
+                <span className="font-medium">Description:</span>{" "}
+                      {invitation.project.description}
+                  </p>
+                )}
                 <p className="text-sm text-muted-foreground">
                   Invited by {invitation.sender.name}
                 </p>

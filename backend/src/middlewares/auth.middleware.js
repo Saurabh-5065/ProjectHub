@@ -9,8 +9,7 @@ export const verifyJWT = asyncHandler(async(req, _, next) => {
         
         console.log(token);
         if (!token) {
-            console.log("Chutiya hai kya");
-            //throw new ApiError(401, "Unauthorized request")
+            throw new ApiError(401, "Unauthorized request")
         }
     
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
@@ -28,3 +27,25 @@ export const verifyJWT = asyncHandler(async(req, _, next) => {
     }
     
 })
+
+export const optionalJWT = asyncHandler(async (req, _, next) => {
+  const token =
+    req.cookies?.accessToken ||
+    req.header("Authorization")?.replace("Bearer ", "");
+
+  if (!token) {
+    req.user = null;
+    return next();
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = await User.findById(decoded._id).select(
+      "-password -refreshToken"
+    );
+  } catch {
+    req.user = null;
+  }
+
+  next();
+});

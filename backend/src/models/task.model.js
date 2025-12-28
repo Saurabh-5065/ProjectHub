@@ -13,11 +13,12 @@ const taskSchema = new Schema({
   completed: { type: Boolean, default: false },
   status: {
     type: String,
-    enum: ['Not Started', 'In Progress', 'Completed', 'In Review', 'Blocked'],
-    default: 'Not Started'
+    enum: ['In Progress','In Review','Completed'],
+    default: 'In Progress'
   },
   project: { type: Schema.Types.ObjectId, ref: "Project" },
-  assignedTo: { type: Schema.Types.ObjectId, ref: "User", required: true }
+  assignedTo: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  assignor: {type: Schema.Types.ObjectId, ref: "User", required: true }
 }, { timestamps: true });
 
 export const Task = mongoose.model("Task", taskSchema);
