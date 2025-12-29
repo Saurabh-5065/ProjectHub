@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { Project } from "../models/project.model.js";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -198,4 +199,47 @@ const getAllUser = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser, logoutUser, refreshAccessToken, getCurrentUser, getAllUser};
+// ------- getProfile---------
+
+ const getProfile = asyncHandler(async (req, res) => {
+  const userId = req.user?._id
+
+  if (!userId) {
+    throw new ApiError(401, "Unauthorized")
+  }
+
+ 
+
+  const user = await User.findById(userId).select(
+    "name username email"
+  )
+
+  if (!user) {
+    throw new ApiError(404, "User not found")
+  }
+
+ 
+
+  const projects = await Project.find({
+    $or: [
+      { teamLead: userId },
+      { members: userId },
+    ],
+  }).select("name teamLead")
+
+  /* ---------- Response ---------- */
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        user,
+        projects,
+      },
+      "Profile fetched successfully"
+    )
+  )
+})
+
+
+export { registerUser, loginUser, logoutUser, refreshAccessToken, getCurrentUser, getAllUser, getProfile};

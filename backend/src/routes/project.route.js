@@ -10,6 +10,7 @@ import { createTask } from '../controllers/task.controller.js';
 import { getMyTasks } from '../controllers/task.controller.js';
 import { updateTaskStatus } from '../controllers/task.controller.js';
 import { getTaskInReview } from '../controllers/task.controller.js';
+import { getProfile } from '../controllers/user.controller.js';
 
 const projectRoute=express.Router();
 
@@ -26,6 +27,8 @@ projectRoute.post("/createTask",verifyJWT, createTask);
 projectRoute.get("/myTask", verifyJWT, getMyTasks);
 projectRoute.patch("/:taskId/status", verifyJWT, updateTaskStatus);
 projectRoute.get("/taskInReview",verifyJWT, getTaskInReview);
+
+projectRoute.get("/getProfile", verifyJWT, getProfile);
 
 
 export default projectRoute;

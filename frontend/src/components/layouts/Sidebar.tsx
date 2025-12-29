@@ -7,19 +7,20 @@ import {
   FolderKanban,
   PlusSquare,
   ListChecks,
-  Users,
   CalendarDays,
   MessageSquare,
   Bell,
   LineChart,
   Settings,
   HelpCircle,
+  User,
   LogOut,
   Briefcase,
+  ClipboardCheck
 } from 'lucide-react';
 
 import type { NavItem } from '../../types';
-import { useLogout } from '../../lib/logout'; // ✅ logout hook
+import { useLogout } from '../../lib/logout'; // logout hook
 
 const sidebarNavItems: NavItem[] = [
   {
@@ -31,16 +32,16 @@ const sidebarNavItems: NavItem[] = [
   { label: 'My Projects', icon: FolderKanban, href: '/projects' },
   { label: 'Create New Project', icon: PlusSquare, href: '/createProject' },
   { label: 'Tasks', icon: ListChecks, href: '/Tasks' },
-  { label: 'Team', icon: Users, href: '/inReview' },
-  { label: 'Calendar', icon: CalendarDays, href: '/Calender' },
-  { label: 'Messages', icon: MessageSquare, href: '/Message' },
+  { label: 'Review', icon: ClipboardCheck, href: '/inReview' },
+  // { label: 'Calendar', icon: CalendarDays, href: '/Calender' },
+  // { label: 'Messages', icon: MessageSquare, href: '/Message' },
   { label: 'Notifications', icon: Bell, href: '/invitations' },
-  { label: 'Reports', icon: LineChart, href: 'Reports' },
+  // { label: 'Reports', icon: LineChart, href: 'Reports' },
 ];
 
 const sidebarBottomNavItems: NavItem[] = [
-  { label: 'Settings', icon: Settings, href: '#' },
-  { label: 'Help', icon: HelpCircle, href: '#' },
+  // { label: 'Settings', icon: Settings, href: '#' },
+  { label: 'Profile', icon: User, href: '/profile' },
   { label: 'Logout', icon: LogOut, href: '#' },
 ];
 
@@ -49,7 +50,7 @@ export interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen }) => {
-  const logout = useLogout(); // ✅ Call the custom logout hook
+  const logout = useLogout(); //  Call the custom logout hook
 
   return (
     <aside

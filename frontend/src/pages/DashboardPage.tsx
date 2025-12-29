@@ -2,12 +2,12 @@
 
 import React from 'react';
 //import { Sidebar } from '../components/layouts/Sidebar'; // Adjusted path
-import { DashboardOverview } from '../components/dashboard/DashboardOverview'; // Adjusted path
+import Dashboard from '@/components/dashboard/Dashboard';
 
 export const DashboardPage: React.FC = () => {
   return (
     <div className="flex h-screen bg-gray-100">
-      <DashboardOverview />
+      <Dashboard />
     </div>
   );
 };

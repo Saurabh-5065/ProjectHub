@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   CheckCircle, Users, Calendar, BarChart3,
-  Zap, Shield, ArrowRight, Star, Menu, X
+  Zap, Shield, ArrowRight, Star, Menu, X, Briefcase
 } from "lucide-react"
 import { Link } from "react-router-dom"
 
@@ -21,21 +21,21 @@ export default function Landing() {
 
   const testimonials = [
     {
-      name: "Sarah Johnson",
+      name: "Saurabh",
       role: "Project Manager",
       company: "TechCorp",
       content: "This platform has revolutionized how we manage projects. Our team productivity increased by 40%.",
       rating: 5
     },
     {
-      name: "Michael Chen",
+      name: "Shivansh",
       role: "Team Lead",
       company: "StartupXYZ",
       content: "The intuitive interface and powerful features make project management a breeze. Highly recommended!",
       rating: 5
     },
     {
-      name: "Emily Davis",
+      name: "Shubh",
       role: "Operations Director",
       company: "GlobalCorp",
       content: "Finally, a project management tool that actually works as promised. Game-changer for our organization.",
@@ -50,14 +50,13 @@ export default function Landing() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-indigo-600 rounded-md flex items-center justify-center">
-              <CheckCircle className="w-5 h-5 text-white" />
+              <Briefcase className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-indigo-700">AgileHub</span>
+            <span className="text-xl font-bold text-indigo-700">ProjectHub</span>
           </div>
           <div className="hidden md:flex items-center space-x-6 text-sm font-medium">
             <a href="#features" className="text-gray-600 hover:text-indigo-600">Features</a>
             <a href="#testimonials" className="text-gray-600 hover:text-indigo-600">Testimonials</a>
-            <a href="#pricing" className="text-gray-600 hover:text-indigo-600">Pricing</a>
             <Link to="/signup">
               <Button className="bg-indigo-600 hover:bg-indigo-700 text-white">Get Started</Button>
             </Link>
@@ -187,7 +186,7 @@ export default function Landing() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Get Started?</h2>
           <p className="text-lg mb-8 max-w-2xl mx-auto">Join thousands of teams and simplify your project workflow today.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/">
+            <Link to="/signup">
               <Button size="lg" className="bg-white text-indigo-700 hover:bg-gray-100 px-8 py-6">
                 Start Free Trial <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
@@ -205,13 +204,13 @@ export default function Landing() {
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-8 h-8 bg-indigo-600 rounded-md flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 text-white" />
+                <Briefcase className="w-5 h-5 text-white" />
               </div>
-              <span className="text-xl font-bold text-indigo-700">AgileHub</span>
+              <span className="text-xl font-bold text-indigo-700">ProjectHub</span>
             </div>
             <p className="text-gray-600">The ultimate project management tool for modern teams.</p>
           </div>
-          {[
+          {/* {[
             { title: "Product", links: ["Features", "Pricing", "Security", "API"] },
             { title: "Company", links: ["About", "Careers", "Blog", "Contact"] },
             { title: "Support", links: ["Help Center", "Docs", "Community", "Status"] }
@@ -224,7 +223,7 @@ export default function Landing() {
                 ))}
               </ul>
             </div>
-          ))}
+          ))} */}
         </div>
         <div className="text-center text-gray-500 text-sm mt-10">
           © 2024 AgileHub. All rights reserved.

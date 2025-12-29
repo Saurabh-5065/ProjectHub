@@ -21,6 +21,7 @@ import { InvitationList } from "./pages/Invitation";
 import NewTask from "./pages/NewTask";
 import ReviewTasks from "./pages/ReviewTasks";
 import Dashboard from "./components/dashboard/Dashboard";
+import Profile from "./pages/Profile";
 
 function ProtectedRouteLayout() {
   const { isAuthenticated } = useAuth()
@@ -49,6 +50,7 @@ export default function App() {
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/invitations" element={<InvitationList/>} />
             <Route path="/inReview" element={<ReviewTasks/>} />
+            <Route path="/profile" element = {<Profile/>}/>
           </Route>
 
           {/* Catch-all */}
