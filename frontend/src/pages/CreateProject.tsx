@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm} from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { FiSearch, FiX, FiUserPlus, FiUserMinus, FiChevronDown } from "react-icons/fi";
+import { FiSearch, FiX, FiUserPlus, FiChevronDown } from "react-icons/fi";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 interface User {
   _id: string;
@@ -38,7 +39,6 @@ export const CreateProject: React.FC = () => {
   const {
     register,
     handleSubmit,
-    control,
     setValue,
     watch,
     formState: { errors },
@@ -63,8 +63,8 @@ export const CreateProject: React.FC = () => {
     const fetchData = async () => {
       try {
         const [usersRes, meRes] = await Promise.all([
-          axios.get("http://localhost:8000/api/auth/users", { withCredentials: true }),
-          axios.get("http://localhost:8000/api/auth/me", { withCredentials: true }),
+          axios.get(`${API_BASE_URL}/api/auth/users`, { withCredentials: true }),
+          axios.get(`${API_BASE_URL}/api/auth/me`, { withCredentials: true }),
         ]);
 
         const fetchedUsers = usersRes.data?.data || [];
@@ -88,7 +88,7 @@ export const CreateProject: React.FC = () => {
 
   const onSubmit = async (data: ProjectFormInputs) => {
     try {
-      await axios.post("http://localhost:8000/api/createProject", data, {
+      await axios.post(`{API_BASE_URL}/api/createProject`, data, {
         withCredentials: true,
       });
       navigate("/projects");

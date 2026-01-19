@@ -3,15 +3,8 @@ import { useNavigate } from "react-router-dom"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
-/* ================= COMPONENT ================= */
-
-// type TaskStatus = "In Progress" | "In Review" | "Completed"
-
-// interface Task {
-//   _id: string
-//   status: TaskStatus
-// }
 
 
 export default function Dashboard() {
@@ -23,14 +16,13 @@ export default function Dashboard() {
   const [completedTasks, setCompletedTasks] = useState(0)
   const [loading, setLoading] = useState(true)
 
-  /* ---------- Fetch Dashboard Data ---------- */
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         /* Pending Invitations */
         const inviteRes = await fetch(
-          "http://localhost:8000/api/requests",
+          `${API_BASE_URL}/api/requests`,
           { credentials: "include" }
         )
         const inviteJson = await inviteRes.json()
@@ -38,7 +30,7 @@ export default function Dashboard() {
 
         /* My Tasks */
         const taskRes = await fetch(
-          "http://localhost:8000/api/myTask",
+          `${API_BASE_URL}/api/myTask`,
           { credentials: "include" }
         )
         const taskJson = await taskRes.json()
@@ -46,7 +38,7 @@ export default function Dashboard() {
         const tasks = taskJson.data || []
 
         const rtaskRes = await fetch(
-          "http://localhost:8000/api/taskInReview",
+          `${API_BASE_URL}/api/taskInReview`,
           { credentials: "include" }
         )
         const rtaskJson = await rtaskRes.json()
@@ -74,7 +66,7 @@ export default function Dashboard() {
     fetchDashboardData()
   }, [])
 
-  /* ---------- Card Component ---------- */
+  
 
   const StatCard = ({
     title,

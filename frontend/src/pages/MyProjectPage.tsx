@@ -10,6 +10,7 @@ import { ProjectCard } from '../components/projects/ProjectCard';
 import { EmptyState } from '../components/ui/empty-state';
 import { Skeleton } from '../components/ui/skeleton';
 import type { MyProject } from '../types';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -35,7 +36,7 @@ export const MyProjectsPage: React.FC = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await axios.get('http://localhost:8000/api/myProjects', {
+        const res = await axios.get(`${API_BASE_URL}/api/myProjects`, {
           withCredentials: true,
         });
 

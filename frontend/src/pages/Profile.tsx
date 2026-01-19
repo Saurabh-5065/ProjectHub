@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Mail, User, Briefcase } from "lucide-react"
 import { toast } from "sonner"
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 
 /* ================= TYPES ================= */
@@ -32,7 +33,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/getProfile", {
+        const res = await fetch(`${API_BASE_URL}/api/getProfile`, {
           credentials: "include",
         })
 

@@ -2,8 +2,8 @@ import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Plus, Calendar, Flag } from "lucide-react"
+import {  Calendar, Flag } from "lucide-react"
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 import NewTaskDialog from "@/components/task/NewTaskDialog"
 

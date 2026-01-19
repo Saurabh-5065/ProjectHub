@@ -4,7 +4,7 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { 
   ArrowLeft, Edit, Save, Trash2, X, Calendar, Users, 
-  AlertCircle, Flag, FileText, Clock, User, Lock, ChevronDown, Search, Plus, Minus
+  AlertCircle, Flag, FileText, User, Lock, Search, Plus, Minus
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -14,6 +14,7 @@ import { Progress } from '../components/ui/progress';
 import { Badge } from '../components/ui/badge';
 import { useAuth } from '../context/AuthContext';
 import type { ProjectPriority } from '../types';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 interface TeamMember {
   _id: string;
@@ -68,9 +69,9 @@ export const ProjectDetail: React.FC = () => {
       try {
         // Fetch current user and all users
         const [meRes, usersRes, projectRes] = await Promise.all([
-          axios.get("http://localhost:8000/api/auth/me", { withCredentials: true }),
-          axios.get("http://localhost:8000/api/auth/users", { withCredentials: true }),
-          axios.get(`http://localhost:8000/api/projects/${id}`, { withCredentials: true })
+          axios.get(`${API_BASE_URL}/api/auth/me`, { withCredentials: true }),
+          axios.get(`${API_BASE_URL}/api/auth/users`, { withCredentials: true }),
+          axios.get(`${API_BASE_URL}/api/projects/${id}`, { withCredentials: true })
         ]);
 
         setCurrentUser(meRes.data?.data);
@@ -141,7 +142,7 @@ export const ProjectDetail: React.FC = () => {
   const handleSave = async () => {
   try {
     const res = await axios.put(
-      `http://localhost:8000/api/projects/${id}`,
+      `${API_BASE_URL}/api/projects/${id}`,
       {
         ...formData,
         dueDate: new Date(formData.dueDate || '').toISOString()
@@ -180,7 +181,7 @@ export const ProjectDetail: React.FC = () => {
     if (window.confirm('Are you sure you want to delete this project?')) {
       try {
         const res = await axios.delete(
-          `http://localhost:8000/api/projects/${id}`,
+          `${API_BASE_URL}/api/projects/${id}`,
           { withCredentials: true }
         );
 

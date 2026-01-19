@@ -10,7 +10,8 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; //Adjust path if needed
+import { useAuth } from '../../context/AuthContext';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const formSchema = z.object({
   username: z.string().min(3, 'Username is required'),
@@ -21,7 +22,7 @@ type LoginData = z.infer<typeof formSchema>;
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useAuth(); //  Get setter from context
+  const { setIsAuthenticated } = useAuth();
 
   const {
     register,
@@ -38,7 +39,7 @@ export default function LoginForm() {
 
     try {
       const res = await axios.post(
-        'http://localhost:8000/api/auth/login',
+        `${API_BASE_URL}/api/auth/login`,
         data,
         {
           withCredentials: true,
@@ -47,8 +48,8 @@ export default function LoginForm() {
 
       if (res.status === 200) {
         localStorage.setItem('accessToken', res.data.accessToken);
-        setIsAuthenticated(true); // ✅ Update context
-        navigate('/dashboard'); // ✅ Redirect
+        setIsAuthenticated(true); // 
+        navigate('/dashboard'); // 
       }
     } catch (error: any) {
       const message = error?.response?.data?.message || 'Something went wrong';

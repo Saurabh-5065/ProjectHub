@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 /* ================= TYPES ================= */
 
@@ -40,7 +41,7 @@ export default function Tasks() {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/myTask", {
+        const res = await fetch(`${API_BASE_URL}/api/myTask`, {
           credentials: "include",
         })
 
@@ -60,7 +61,7 @@ export default function Tasks() {
 
   const markForReview = async (taskId: string) => {
     try {
-      await fetch(`http://localhost:8000/api/${taskId}/status`, {
+      await fetch(`${API_BASE_URL}/api/${taskId}/status`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

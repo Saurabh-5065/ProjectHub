@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, CheckCircle2, XCircle } from "lucide-react";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 
 interface Invitation {
   _id: string;
@@ -33,7 +35,7 @@ export function InvitationList() {
   const fetchInvitations = async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:8000/api/requests", {
+      const res = await fetch(`${API_BASE_URL}/api/requests`, {
         credentials: "include", // Ensures cookies are sent
       });
       
@@ -57,7 +59,7 @@ export function InvitationList() {
   const handleResponse = async (invitationId: string, action: "accept" | "reject") => {
     try {
       setRespondingId(invitationId);
-      const res = await fetch("http://localhost:8000/api/respond", {
+      const res = await fetch(`${API_BASE_URL}/api/respond`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
