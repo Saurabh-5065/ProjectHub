@@ -1,7 +1,6 @@
 // components/ui/empty-state.tsx
 import React from 'react';
 import { Frown } from 'lucide-react';
-import { Button } from './button';
 
 interface EmptyStateProps {
   icon?: React.ReactNode;

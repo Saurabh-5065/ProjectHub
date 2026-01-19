@@ -23,22 +23,22 @@ interface ProjectCardProps {
   project: MyProject;
 }
 
-const getPriorityBadgeVariant = (
-  priority: ProjectPriority
-): 'default' | 'destructive' | 'secondary' | 'outline' => {
-  switch (priority) {
-    case 'High':
-      return 'destructive';
-    case 'Critical':
-      return 'destructive';
-    case 'Medium':
-      return 'default';
-    case 'Low':
-      return 'secondary';
-    default:
-      return 'outline';
-  }
-};
+// const getPriorityBadgeVariant = (
+//   priority: ProjectPriority
+// ): 'default' | 'destructive' | 'secondary' | 'outline' => {
+//   switch (priority) {
+//     case 'High':
+//       return 'destructive';
+//     case 'Critical':
+//       return 'destructive';
+//     case 'Medium':
+//       return 'default';
+//     case 'Low':
+//       return 'secondary';
+//     default:
+//       return 'outline';
+//   }
+// };
 
 const getPriorityBgColor = (priority: ProjectPriority): string => {
   switch (priority) {
