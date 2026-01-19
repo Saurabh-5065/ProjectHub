@@ -47,7 +47,6 @@ export default function LoginForm() {
       );
 
       if (res.status === 200) {
-        localStorage.setItem('accessToken', res.data.accessToken);
         setIsAuthenticated(true); // 
         navigate('/dashboard'); // 
       }
