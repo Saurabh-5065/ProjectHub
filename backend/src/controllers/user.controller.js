@@ -202,8 +202,8 @@ const generateAccessAndRefreshToken = async (userId) => {
 
 const cookieOptions = {
   httpOnly: true,
-  secure: true,        // REQUIRED on Render
-  sameSite: "none",    // REQUIRED for cross-origin
+  secure: true,        
+  sameSite: "none",   
   path: "/",
 };
 

@@ -88,12 +88,12 @@ export const CreateProject: React.FC = () => {
 
   const onSubmit = async (data: ProjectFormInputs) => {
     try {
-      await axios.post(`{API_BASE_URL}/api/createProject`, data, {
+      await axios.post(`${API_BASE_URL}/api/createProject`, data, {
         withCredentials: true,
       });
       navigate("/projects");
     } catch (err: any) {
-      alert(err.response?.data?.message || "Failed to create It me project");
+      alert(err.response?.data?.message || "Failed to create project");
     }
   };
 

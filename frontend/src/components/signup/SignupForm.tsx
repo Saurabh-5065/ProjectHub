@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -37,8 +38,8 @@ export default function SignupForm() {
     setSuccessMessage(null);
 
     try {
-      await axios.post('http://localhost:8000/api/auth/register', data, {
-        withCredentials: true, // ✅ Needed if you're using cookies for auth
+      await axios.post(`${API_BASE_URL}/api/auth/register`, data, {
+        withCredentials: true, // 
       });
       setSuccessMessage('Account created successfully!');
       reset();

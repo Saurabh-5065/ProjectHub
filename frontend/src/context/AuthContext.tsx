@@ -2,6 +2,8 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import axios from 'axios';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -25,7 +27,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const res = await axios.get('http://localhost:8000/api/auth/me', {
+        const res = await axios.get(`${API_BASE_URL}:8000/api/auth/me`, {
           withCredentials: true,
         });
 

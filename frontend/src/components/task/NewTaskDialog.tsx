@@ -9,6 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 import {
   Select,
@@ -65,7 +66,7 @@ export default function NewTaskDialog({ onCreate }: { onCreate: (task: Task) => 
   const [error, setError] = useState("");
 
   const fetchProjects = async () => {
-    const res = await fetch("http://localhost:8000/api/projectforTask", {
+    const res = await fetch(`${API_BASE_URL}/api/projectforTask`, {
       credentials: "include",
     });
     const json = await res.json();
@@ -84,7 +85,7 @@ export default function NewTaskDialog({ onCreate }: { onCreate: (task: Task) => 
       return;
     }
 
-    const res = await fetch("http://localhost:8000/api/createTask", {
+    const res = await fetch(`${API_BASE_URL}/api/createTask`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
